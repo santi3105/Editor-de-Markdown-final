@@ -1,0 +1,22 @@
+{
+  "name": "editor-markdown",
+  "version": "2.0.0",
+  "description": "Editor de Markdown con vista previa en vivo, documentos guardados en un servidor Express y exportación a PDF.",
+  "type": "module",
+  "main": "server/index.mjs",
+  "scripts": {
+    "start": "node server/index.mjs",
+    "dev": "node --watch server/index.mjs",
+    "test": "node --test tests/api.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "compression": "^1.8.2",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0"
+  },
+  "license": "MIT"
+}

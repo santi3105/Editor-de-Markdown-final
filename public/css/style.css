@@ -1,0 +1,90 @@
+/* ============================================================
+   style.css — solo lo que Bootstrap no resuelve por sí mismo
+   ============================================================ */
+
+:root {
+  --focus-color: #0a58ca;     /* tema claro: azul oscuro sobre blanco */
+  --paper-bg: #ffffff;
+  --paper-text: #212529;
+  --paper-link: #0a58ca;
+  --paper-border: #ced4da;
+  --paper-code-bg: #e9ecef;
+}
+[data-bs-theme="dark"] {
+  --focus-color: #6ea8fe;     /* tema oscuro: azul claro sobre gris oscuro */
+}
+
+/* Enlace "Saltar al editor": solo aparece al navegar con Tab */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 2000;
+  padding: 0.5rem 1rem;
+  background: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  border: 2px solid var(--focus-color);
+  border-radius: 0.375rem;
+}
+.skip-link:focus { top: 1rem; }
+
+/* Foco SIEMPRE visible con teclado (ratio de contraste >= 3:1 en ambos temas) */
+:focus-visible,
+.btn:focus-visible,
+.btn-check:focus-visible + .btn,
+.form-control:focus,
+.form-select:focus {
+  outline: 3px solid var(--focus-color) !important;
+  outline-offset: 2px;
+  box-shadow: none !important;
+}
+
+.marca { color: var(--focus-color); font-family: var(--bs-font-monospace); font-weight: 700; }
+.navbar-brand { font-size: 1.25rem; }
+
+/* Alto de los dos paneles de trabajo */
+.panel-trabajo { height: 60vh; min-height: 22rem; }
+#editor { resize: vertical; font-size: 0.95rem; line-height: 1.6; }
+
+/* La vista previa se ve como una hoja de papel (también en tema oscuro) */
+.preview-scroll { overflow-y: auto; background: var(--paper-bg); }
+.preview-paper {
+  background: var(--paper-bg);
+  color: var(--paper-text);
+  padding: 1.5rem 2rem;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.preview-paper h1, .preview-paper h2, .preview-paper h3 { line-height: 1.25; margin-top: 1.2em; }
+.preview-paper h1 { font-size: 1.9rem; border-bottom: 1px solid var(--paper-border); padding-bottom: 0.3rem; }
+.preview-paper h2 { font-size: 1.45rem; }
+.preview-paper h3 { font-size: 1.15rem; }
+.preview-paper a { color: var(--paper-link); }
+.preview-paper code {
+  background: var(--paper-code-bg);
+  color: var(--paper-text);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+.preview-paper pre { background: #212529; color: #f8f9fa; padding: 1rem; border-radius: 0.375rem; overflow-x: auto; }
+.preview-paper pre code { background: none; color: inherit; padding: 0; }
+.preview-paper blockquote {
+  border-left: 4px solid #198754;
+  margin: 1em 0;
+  padding: 0.3em 1em;
+  background: #f1f3f5;
+  color: #343a40;
+}
+.preview-paper table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+.preview-paper th, .preview-paper td { border: 1px solid var(--paper-border); padding: 0.4em 0.7em; text-align: left; }
+.preview-paper th { background: var(--paper-code-bg); }
+.preview-paper img { max-width: 100%; }
+
+/* Los títulos (h2) de cada panel no necesitan margen extra */
+section > h2 { margin-bottom: 0.4rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

@@ -1,0 +1,19 @@
+# Dependencias (se reinstalan con "npm install")
+node_modules/
+
+# Variables de entorno: pueden contener claves, NUNCA se suben al repositorio
+.env
+.env.*
+!.env.example
+
+# Datos generados por el servidor al guardar documentos
+data/*.json
+
+# Registros y archivos del sistema
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Informes locales de Lighthouse (se entregan aparte)
+lighthouse-*.json

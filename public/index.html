@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport: sin esta línea el diseño adaptable no funciona en celulares -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Editor de Markdown con vista previa en vivo, documentos guardados en un servidor propio y exportación a PDF.">
+  <title>Editor Markdown</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23198754'/%3E%3Ctext x='16' y='24' font-size='22' text-anchor='middle' fill='white' font-family='monospace' font-weight='bold'%3E%23%3C/text%3E%3C/svg%3E">
+  <!-- Bootstrap 5.3.8 en copia local (versión fija) -->
+  <link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#editor">Saltar al editor</a>
+
+  <!-- ===== Barra superior (navbar de Bootstrap) ===== -->
+  <nav class="navbar bg-body-tertiary border-bottom">
+    <div class="container-fluid">
+      <h1 class="navbar-brand mb-0"><span class="marca" aria-hidden="true">#</span> Editor Markdown</h1>
+      <div class="d-flex align-items-center gap-2">
+        <span id="saludo" class="small text-body-secondary d-none d-sm-inline"></span>
+        <button type="button" id="btnTema" class="btn btn-secondary btn-sm" data-action="tema">Cambiar a tema claro</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalPrefs">Preferencias</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-fluid py-3">
+    <!-- Aquí aparecen los mensajes de éxito / error -->
+    <div id="mensajes" class="mb-3"></div>
+
+    <!-- ===== Título del documento + botones =====
+         Cuadrícula: en celular cada bloque ocupa todo el ancho (col-12);
+         desde "md" se reparten en dos columnas. -->
+    <form id="formDoc" class="row g-3 align-items-end mb-3" novalidate>
+      <div class="col-12 col-md-5 col-xl-4">
+        <label for="titulo" class="form-label">Título del documento</label>
+        <input id="titulo" type="text" class="form-control" maxlength="100" autocomplete="off"
+               aria-describedby="ayudaTitulo" required>
+        <div id="ayudaTitulo" class="form-text">Obligatorio para guardar en el servidor (máx. 100 caracteres).</div>
+      </div>
+      <div class="col-12 col-md-7 col-xl-8">
+        <div class="d-flex flex-wrap gap-2">
+          <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-action="nuevo">Nuevo</button>
+          <button type="button" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#panelDocs" aria-controls="panelDocs">Mis documentos</button>
+          <button type="button" class="btn btn-secondary" data-action="abrir-md">Abrir .md</button>
+          <button type="button" class="btn btn-secondary" data-action="descargar-md">Descargar .md</button>
+          <button type="button" class="btn btn-secondary" data-action="cita">Insertar cita</button>
+          <button type="button" class="btn btn-success" data-action="exportar-pdf">Exportar PDF</button>
+          <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#ayuda"
+                  aria-expanded="false" aria-controls="ayuda">Ayuda de sintaxis</button>
+        </div>
+      </div>
+    </form>
+    <input type="file" id="archivo" accept=".md,.markdown,.txt" hidden>
+
+    <!-- Panel de ayuda: el componente "collapse" de Bootstrap actualiza aria-expanded solo -->
+    <div class="collapse mb-3" id="ayuda">
+      <div class="card card-body">
+        <table class="table table-sm mb-0">
+          <caption class="visually-hidden">Resumen de la sintaxis de Markdown</caption>
+          <thead><tr><th scope="col">Escribes</th><th scope="col">Se convierte en</th></tr></thead>
+          <tbody>
+            <tr><td><code># Título</code></td><td>Encabezado grande</td></tr>
+            <tr><td><code>**negrita**</code></td><td>Texto en negrita</td></tr>
+            <tr><td><code>- elemento</code></td><td>Lista con viñetas</td></tr>
+            <tr><td><code>&gt; cita</code></td><td>Cita con línea lateral</td></tr>
+            <tr><td><code>[texto](https://…)</code></td><td>Enlace</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== Editor y vista previa: lado a lado en pantallas grandes (lg), apilados en celular ===== -->
+    <div class="row g-3">
+      <section class="col-12 col-lg-6" aria-labelledby="tituloEditor">
+        <h2 id="tituloEditor" class="h6 text-body-secondary">Editor</h2>
+        <label for="editor" class="visually-hidden">Texto en Markdown</label>
+        <textarea id="editor" class="form-control font-monospace panel-trabajo" spellcheck="false"
+                  placeholder="# Escribe tu Markdown aquí…"></textarea>
+        <div id="estado" class="form-text" aria-live="polite"></div>
+      </section>
+
+      <section class="col-12 col-lg-6" aria-labelledby="tituloVista">
+        <h2 id="tituloVista" class="h6 text-body-secondary">Vista previa</h2>
+        <div class="preview-scroll panel-trabajo border rounded">
+          <div id="preview" class="preview-paper" role="region" aria-labelledby="tituloVista"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===== Offcanvas: lista de documentos guardados ===== -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="panelDocs" aria-labelledby="panelDocsTitulo">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title h5" id="panelDocsTitulo">Mis documentos</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar panel"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p id="docsEstado" class="text-body-secondary" role="status"></p>
+      <ul id="listaDocs" class="list-group"></ul>
+    </div>
+  </div>
+
+  <!-- ===== Modal: preferencias (localStorage) ===== -->
+  <div class="modal fade" id="modalPrefs" tabindex="-1" aria-labelledby="modalPrefsTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="modalPrefsTitulo">Preferencias</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <label for="prefNombre" class="form-label">Tu nombre (opcional)</label>
+          <input id="prefNombre" type="text" class="form-control" maxlength="40" autocomplete="given-name"
+                 aria-describedby="ayudaNombre">
+          <div id="ayudaNombre" class="form-text">Se muestra en el saludo y se usa como autor del PDF. Se guarda solo en este navegador.</div>
+          <hr>
+          <p class="mb-2">Borra las preferencias y el borrador de esta pestaña. Tus documentos del servidor no se tocan.</p>
+          <button type="button" class="btn btn-danger" data-action="borrar-datos">Borrar preferencias y borrador</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" data-action="guardar-prefs">Guardar preferencias</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Modal: confirmar borrado de un documento ===== -->
+  <div class="modal fade" id="modalBorrar" tabindex="-1" aria-labelledby="modalBorrarTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="modalBorrarTitulo">¿Eliminar documento?</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          Vas a eliminar «<strong id="borrarTitulo"></strong>». Esta acción no se puede deshacer.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" data-action="confirmar-borrado">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Librerías locales (scripts clásicos que crean variables globales) -->
+  <script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="libs/marked.umd.js"></script>
+  <script src="libs/purify.min.js"></script>
+  <!-- html2pdf NO se carga aquí: se descarga bajo demanda (ver js/pdf.mjs) -->
+  <script type="module" src="js/main.mjs"></script>
+</body>
+</html>
