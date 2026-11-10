@@ -1,10 +1,3 @@
-// ============================================================
-// api.mjs — toda la comunicación con el backend (fetch + async/await)
-//
-// Un solo helper ("pedir") hace la petición, revisa response.ok y
-// convierte cualquier fallo en un ErrorApi con un mensaje claro para
-// la persona que usa la aplicación.
-// ============================================================
 
 import { API_BASE_URL } from './config.mjs';
 import { obtenerIdCliente } from './prefs.mjs';

@@ -1,16 +1,3 @@
-// ============================================================
-// routes/documents.mjs — API REST de documentos
-//
-//   GET    /api/documents       -> 200 lista (resumen) del cliente
-//   GET    /api/documents/:id   -> 200 documento | 404
-//   POST   /api/documents       -> 201 creado    | 400 | 409
-//   PUT    /api/documents/:id   -> 200 editado   | 400 | 404
-//   DELETE /api/documents/:id   -> 204 sin cuerpo | 404
-//
-// Todas las respuestas son JSON (salvo el 204, que no lleva cuerpo).
-// Cada navegador se identifica con la cabecera X-Client-Id y solo
-// ve sus propios documentos.
-// ============================================================
 
 import { Router } from 'express';
 import { esUuid, validarDocumento, MAX_DOCUMENTOS_POR_CLIENTE } from '../validators.mjs';

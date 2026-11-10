@@ -30,14 +30,12 @@
     <!-- Aquí aparecen los mensajes de éxito / error -->
     <div id="mensajes" class="mb-3"></div>
 
-    <!-- ===== Título del documento + botones =====
-         Cuadrícula: en celular cada bloque ocupa todo el ancho (col-12);
-         desde "md" se reparten en dos columnas. -->
+
     <form id="formDoc" class="row g-3 align-items-end mb-3" novalidate>
       <div class="col-12 col-md-5 col-xl-4">
         <label for="titulo" class="form-label">Título del documento</label>
         <input id="titulo" type="text" class="form-control" maxlength="100" autocomplete="off"
-               aria-describedby="ayudaTitulo" required>
+              aria-describedby="ayudaTitulo" required>
         <div id="ayudaTitulo" class="form-text">Obligatorio para guardar en el servidor (máx. 100 caracteres).</div>
       </div>
       <div class="col-12 col-md-7 col-xl-8">
@@ -115,7 +113,7 @@
         <div class="modal-body">
           <label for="prefNombre" class="form-label">Tu nombre (opcional)</label>
           <input id="prefNombre" type="text" class="form-control" maxlength="40" autocomplete="given-name"
-                 aria-describedby="ayudaNombre">
+                aria-describedby="ayudaNombre">
           <div id="ayudaNombre" class="form-text">Se muestra en el saludo y se usa como autor del PDF. Se guarda solo en este navegador.</div>
           <hr>
           <p class="mb-2">Borra las preferencias y el borrador de esta pestaña. Tus documentos del servidor no se tocan.</p>

@@ -1,12 +1,4 @@
-// ============================================================
-// main.mjs — punto de entrada: conecta el HTML con los módulos.
-//
-// Recorrido típico de una acción (útil para la sustentación):
-//   clic en "Guardar" -> listener (delegación/submit) -> guardarDocumento()
-//   -> api.crearDocumento() -> fetch POST /api/documents
-//   -> ruta de Express valida y guarda -> responde 201 + JSON
-//   -> se muestra el mensaje de éxito y se actualiza el estado.
-// ============================================================
+
 
 import { renderMarkdown } from './render.mjs';
 import * as api from './api.mjs';

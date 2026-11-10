@@ -1,8 +1,4 @@
-// ============================================================
-// validators.mjs — validación de lo que llega al servidor.
-// Nunca se confía en lo que manda el navegador: aunque el
-// frontend ya valide, el servidor vuelve a comprobar todo.
-// ============================================================
+
 
 export const MAX_TITULO = 100;
 export const MAX_CONTENIDO = 200_000; // caracteres

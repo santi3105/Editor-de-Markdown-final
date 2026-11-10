@@ -1,15 +1,4 @@
-// ============================================================
-// prefs.mjs — persistencia en el navegador (Web Storage)
-//
-//  localStorage   -> lo que debe recordarse SIEMPRE: preferencias
-//                    (tema, nombre) y un identificador anónimo del navegador.
-//  sessionStorage -> datos de ESTA visita: el borrador que se está escribiendo.
-//                    Se pierde al cerrar la pestaña (lo que importa se guarda
-//                    en el servidor con el botón "Guardar").
-//
-// No se guarda nada sensible: ni contraseñas ni datos personales
-// más allá de un nombre opcional que el usuario escribe.
-// ============================================================
+
 
 const CLAVE_PREFS = 'md-editor:prefs';
 const CLAVE_CLIENTE = 'md-editor:clientId';

@@ -1,11 +1,4 @@
-// ============================================================
-// ui.mjs — piezas de interfaz reutilizables: mensajes, estados de
-// carga, lista de documentos y tema claro/oscuro.
-//
-// Seguridad (XSS): todo texto que viene del servidor o del usuario
-// (títulos, nombres) se inserta con textContent / createTextNode,
-// NUNCA con innerHTML.
-// ============================================================
+
 
 const contenedorMensajes = document.getElementById('mensajes');
 const ETIQUETAS = { success: 'Éxito', danger: 'Error', info: 'Aviso', warning: 'Atención' };

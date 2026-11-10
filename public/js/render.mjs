@@ -1,8 +1,3 @@
-// ============================================================
-// render.mjs — Markdown -> HTML seguro (marked + DOMPurify)
-// Las dos librerías se cargan como <script> en index.html y
-// quedan como variables globales (marked, DOMPurify).
-// ============================================================
 
 marked.setOptions({ breaks: true, gfm: true });
 

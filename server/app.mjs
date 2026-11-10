@@ -1,7 +1,4 @@
-// ============================================================
-// app.mjs — construye la aplicación Express (sin arrancarla).
-// Separarlo de index.mjs permite probar la API con tests.
-// ============================================================
+
 
 import express from 'express';
 import cors from 'cors';

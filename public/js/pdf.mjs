@@ -1,10 +1,4 @@
-// ============================================================
-// pdf.mjs — exportar a PDF con CARGA PEREZOSA (lazy loading)
-//
-// html2pdf pesa casi 1 MB. Como solo se usa al pulsar "Exportar PDF",
-// NO se descarga al abrir la página: se carga la primera vez que se
-// necesita. Así la página inicial carga mucho más rápido.
-// ============================================================
+
 
 const RUTA_LIBRERIA = new URL('../libs/html2pdf.bundle.min.js', import.meta.url).href;
 let promesaCarga = null;

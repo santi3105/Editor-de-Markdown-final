@@ -1,8 +1,4 @@
-// ============================================================
-// index.mjs — punto de arranque del servidor (npm start)
-// Lee la configuración de variables de entorno (archivo .env en
-// desarrollo; panel de Render en producción).
-// ============================================================
+
 
 import 'dotenv/config';
 import path from 'node:path';

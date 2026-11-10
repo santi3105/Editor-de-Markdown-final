@@ -1,12 +1,4 @@
-// ============================================================
-// store.mjs — "base de datos" sencilla: un archivo JSON.
-//
-// Para un proyecto de clase es suficiente y evita instalar
-// una base de datos. Los documentos se guardan en memoria y
-// cada cambio se escribe en el archivo, para sobrevivir a
-// reinicios del servidor. Cada documento pertenece a un
-// "propietario" (el identificador anónimo del navegador).
-// ============================================================
+
 
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
